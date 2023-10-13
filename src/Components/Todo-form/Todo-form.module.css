@@ -1,15 +1,17 @@
 .form {
-display: flex;
-justify-content: center;
-padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  gap: 10px;
 }
 .form input {
-    width: 500px;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid blue;
-    font-size: 18px;
+  width: 500px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid blue;
+  font-size: 18px;
 }
 .form button {
-    font-size: 18px;
+  font-size: 16px;
+  cursor: pointer;
 }
