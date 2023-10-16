@@ -2,11 +2,10 @@ import React from "react";
 import TodoForm from "./Todo-form";
 import { useSelector, useDispatch } from "react-redux";
 import TodoList from "./Todo-list/Todo-list";
-import { deleteTodo, changeTodo,editTodo } from "../Redux/Actions";
+import { deleteTodo, changeTodo,editTodo,completedTodo } from "../Redux/Actions";
 
 const Home = () => {
   const { todos } = useSelector((state) => state.todoReducer);
-  console.log("todos>>>", todos);
 
   const dispatch = useDispatch();
   const handleDelete = (id) => {
@@ -18,6 +17,10 @@ const Home = () => {
   const updateTodo = (id, text) => {
     dispatch(editTodo(id,text))
   };
+  const isActivTodo=(id)=>{
+    dispatch(completedTodo(id))
+  }
+
 
   return (
     <div>
@@ -32,6 +35,7 @@ const Home = () => {
             handleDelete={handleDelete}
             handleChange={handleChange}
             updateTodo={updateTodo}
+            isActivTodo={isActivTodo}
           />
         );
       })}

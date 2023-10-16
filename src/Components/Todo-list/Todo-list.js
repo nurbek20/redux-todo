@@ -5,16 +5,17 @@ const TodoList = (props) => {
   const {
     index,
     id,
-    text,
+    title,
     completed,
     change,
     handleDelete,
     handleChange,
     updateTodo,
+    isActivTodo,
   } = props;
-  const [input, setInput] = useState(text);
-  const handleUpdate=() => {
-    updateTodo(id,input);
+  const [input, setInput] = useState(title);
+  const handleUpdate = () => {
+    updateTodo(id, input);
   };
   return (
     <>
@@ -31,10 +32,14 @@ const TodoList = (props) => {
         <div className={s.form}>
           <ul>
             <li>
-              <input type="checkbox" />
-              <span>{`${index + 1}. ${text}`}</span>
-              <button  onClick={() => handleChange(id)}>Change</button>
-              <button  onClick={() => handleDelete(id)}>Delete</button>
+              <input
+                onChange={() => isActivTodo(id)}
+                checked={completed}
+                type="checkbox"
+              />
+              <span className={completed?s.text:null} >{`${index + 1}. ${title}`}</span>
+              <button disabled={completed?true:false} onClick={() => handleChange(id)}>Change</button>
+              <button disabled={completed?false:true} onClick={() => handleDelete(id)}>Delete</button>
             </li>
           </ul>
         </div>

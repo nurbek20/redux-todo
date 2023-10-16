@@ -1,7 +1,13 @@
-import { ADD_TODO, DELETE_TODO, CHANGE_TODO,EDIT_TODO } from "./Types";
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  CHANGE_TODO,
+  EDIT_TODO,
+  COMPLETED_TODO,
+  GET_POST
+} from "./Types";
 
 export const addTodo = (data) => {
-  console.log("data>>>", data);
   return {
     type: ADD_TODO,
     payload: data,
@@ -21,9 +27,23 @@ export const changeTodo = (id) => {
   };
 };
 
-export const editTodo=(id,text)=>{
+export const editTodo = (id, text) => {
   return {
-    type:EDIT_TODO,
-    id,text
+    type: EDIT_TODO,
+    id,
+    text,
+  };
+};
+export const completedTodo = (id) => {
+  return{
+    type:COMPLETED_TODO,
+    id
+  }
+};
+
+export const addPost=(data)=>{
+  return{
+    type:GET_POST,
+    payload:{data}
   }
 }
