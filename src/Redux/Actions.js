@@ -4,7 +4,8 @@ import {
   CHANGE_TODO,
   EDIT_TODO,
   COMPLETED_TODO,
-  GET_POST
+  GET_POST,
+  LOAD_TODOS
 } from "./Types";
 
 export const addTodo = (data) => {
@@ -43,7 +44,16 @@ export const completedTodo = (id) => {
 
 export const addPost=(data)=>{
   return{
-    type:GET_POST,
-    payload:{data}
+    type: GET_POST,
+    payload: data
   }
 }
+
+export const onLoadTodos=(data)=>{
+  return{
+    type: LOAD_TODOS,
+    payload: data
+  }
+}
+
+

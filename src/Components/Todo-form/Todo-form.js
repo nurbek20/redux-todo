@@ -1,9 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import s from "./Todo-form.module.css"
 import uniqid from 'uniqid';
-import { addTodo,addPost } from '../../Redux/Actions';
+import { addTodo } from '../../Redux/Actions';
 import { useDispatch } from 'react-redux';
-import { getPost } from '../../http/services';
 
 const TodoForm = () => {
   const dispatch=useDispatch()
@@ -21,13 +20,7 @@ const TodoForm = () => {
     dispatch(addTodo(newItem))
     setInput('');
   }
-  useEffect(()=>{
-    const posts=async()=>{
-      const data=await getPost()
-      dispatch(addPost(data.data))
-    }
-    posts()
-  },[])
+  
 
   return (
       <form onSubmit={handleSubmit} className={s.form}>

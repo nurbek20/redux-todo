@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import TodoForm from "./Todo-form";
 import { useSelector, useDispatch } from "react-redux";
 import TodoList from "./Todo-list/Todo-list";
-import { deleteTodo, changeTodo,editTodo,completedTodo } from "../Redux/Actions";
+import {
+  deleteTodo,
+  changeTodo,
+  editTodo,
+  completedTodo,
+  addPost,
+} from "../Redux/Actions";
+import { getTodos } from "../thunk/services";
 
 const Home = () => {
-  const { todos } = useSelector((state) => state.todoReducer);
+  const { todos, loadTodos } = useSelector((state) => state.todos);
 
   const dispatch = useDispatch();
   const handleDelete = (id) => {
@@ -15,30 +22,53 @@ const Home = () => {
     dispatch(changeTodo(id));
   };
   const updateTodo = (id, text) => {
-    dispatch(editTodo(id,text))
+    dispatch(editTodo(id, text));
   };
-  const isActivTodo=(id)=>{
-    dispatch(completedTodo(id))
-  }
+  const isActivTodo = (id) => {
+    dispatch(completedTodo(id));
+  };
 
+  useEffect(() => {
+    dispatch(getTodos());
+  }, []);
+
+  useEffect(() => {
+    if(loadTodos) {
+      dispatch(addPost(loadTodos))
+    }
+  }, [])
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos"));
+    if (storedTodos && storedTodos.length > 0) {
+      dispatch(addPost(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <div>
       <h1 className="title">Todo List</h1>
       <TodoForm />
-      {todos.map((elem, index) => {
-        return (
-          <TodoList
-            key={index}
-            {...elem}
-            index={index}
-            handleDelete={handleDelete}
-            handleChange={handleChange}
-            updateTodo={updateTodo}
-            isActivTodo={isActivTodo}
-          />
-        );
-      })}
+      <div className="list">
+        {todos &&
+          todos.map((elem, index) => {
+            return (
+              <TodoList
+                key={index}
+                {...elem}
+                index={index}
+                handleDelete={handleDelete}
+                handleChange={handleChange}
+                updateTodo={updateTodo}
+                isActivTodo={isActivTodo}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

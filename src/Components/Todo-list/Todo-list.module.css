@@ -5,14 +5,12 @@
 .form{
   width: 999px;
   margin: 0 auto;
-  border: 1px solid red;
 }
 
 .form li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid red;
 }
 .form span {
   font-size: 18px;

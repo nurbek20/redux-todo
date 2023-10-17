@@ -4,20 +4,24 @@ import {
   CHANGE_TODO,
   EDIT_TODO,
   COMPLETED_TODO,
-  GET_POST
+  GET_POST,
+  LOAD_TODOS,
 } from "../Types";
 
 const initialState = {
   todos: [],
+  loadTodos: []
 };
+
 
 export const todoReducer = (state = initialState, action) => {
   const { payload, type } = action;
   switch (type) {
     case ADD_TODO: {
+      const updatedTodos = [...state.todos, payload];
       return {
         ...state,
-        todos: [...state.todos, payload],
+        todos: updatedTodos,
       };
     }
     case DELETE_TODO: {
@@ -52,7 +56,7 @@ export const todoReducer = (state = initialState, action) => {
     }
     case COMPLETED_TODO: {
       const { id } = action;
-      const complete = state.todos.map((elem, i) => {
+      const complete =  state.todos.map((elem, i) => {
         return elem.id === id
           ? { ...elem, completed: !elem.completed }
           : { ...elem };
@@ -63,10 +67,15 @@ export const todoReducer = (state = initialState, action) => {
       };
     }
     case GET_POST:{
-      const {data}=payload
       return {
         ...state,
-        todos:data
+        todos: payload
+      }
+    }
+    case LOAD_TODOS:{
+      return {
+        ...state,
+        loadTodos: payload
       }
     }
     default:
